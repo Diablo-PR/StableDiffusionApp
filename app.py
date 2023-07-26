@@ -14,10 +14,10 @@ app.geometry("532x632")
 app.title("Stable Bud") 
 ctk.set_appearance_mode("dark") 
 
-prompt = ctk.CTkEntry(height=40, width=512, text_font=("Arial", 20), text_color="black", fg_color="white") 
+prompt = ctk.CTkEntry(master=None,height=40, width=512, text_color="black", fg_color="white") 
 prompt.place(x=10, y=10)
 
-lmain = ctk.CTkLabel(height=512, width=512)
+lmain = ctk.CTkLabel(master=None,height=512, width=512)
 lmain.place(x=10, y=110)
 
 modelid = "CompVis/stable-diffusion-v1-4"
@@ -27,13 +27,13 @@ pipe.to(device)
 
 def generate(): 
     with autocast(device): 
-        image = pipe(prompt.get(), guidance_scale=8.5)["sample"][0]
+        image = pipe(prompt.get(), guidance_scale=8.5).images[0]
     
     image.save('generatedimage.png')
     img = ImageTk.PhotoImage(image)
     lmain.configure(image=img) 
 
-trigger = ctk.CTkButton(height=40, width=120, text_font=("Arial", 20), text_color="white", fg_color="blue", command=generate) 
+trigger = ctk.CTkButton(master=None,height=40, width=120, text_color="white", fg_color="blue", command=generate) 
 trigger.configure(text="Generate") 
 trigger.place(x=206, y=60) 
 
